@@ -6,6 +6,7 @@ const {SuccessResponse, ErrorResponse} = require('../utils/response');
 
 async function createUser(req, res){
     try {
+        console.log(req.params.id);
         const response = await UserTagService.createUserTag(req.params.id, req.body.tags, req.body.expiry);
 
         SuccessResponse.message = "successfully created.";

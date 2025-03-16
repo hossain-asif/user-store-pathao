@@ -8,13 +8,19 @@ let userRepository = new UserRepository();
 
 
 async function createUserTag(user_id, tags, expiry){
+    // console.log(tags);
     try{
-        const tagEntries = tags.map(tag => ({
-            user_id,
-            tag,
-            expiresAt: expiry ? new Date(Date.now() + expiry) : null
-        }));
-        let User = await userTagRepository.bulkInsertTag(tagEntries);
+        const tagsArray = tags ? tags.split(',') : [];
+        const expiryDate = new Date(expiry);
+        for (let tag of tagsArray) {
+            let User = await userTagRepository.create({
+                user_id: user_id,
+                tag: tag.trim(),  // Optional: Trim any extra spaces
+                expiry: expiryDate
+            });
+
+        }
+        
         return User;
 
     }catch(error){

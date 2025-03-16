@@ -25,7 +25,7 @@ router.get('/:id',
 
 
 // /api/v1/users/id POST
-router.post('/users/:id/tags',
+router.post('/:id/tags',
     UserTagController.createUser);
 
 // /api/v1/users/ GET

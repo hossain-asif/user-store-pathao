@@ -9,6 +9,7 @@ class UserTagRepository extends CrudRepository{
     }
 
     async bulkInsertTag(data){
+        console.log(data);
         let response = await this.model.bulkCreate(data);
         return response;
     }
