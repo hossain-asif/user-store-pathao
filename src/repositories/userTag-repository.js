@@ -1,5 +1,7 @@
-const {user_tags} = require("../models");
+const {user_tags, User} = require("../models");
 const CrudRepository = require("./crud-repository");
+const { Op } = require("sequelize");
+
 
 
 
@@ -8,26 +10,29 @@ class UserTagRepository extends CrudRepository{
         super(user_tags);
     }
 
-    async bulkInsertTag(data){
-        console.log(data);
-        let response = await this.model.bulkCreate(data);
-        return response;
-    }
+    async findUsersByTags(tagList) {
+        try {
+            const result = await user_tags.findAll({
+                where: {
+                    tag: { [Op.in]: tagList },
+                    [Op.or]: [
+                        { expiry: null },
+                        { expiry: { [Op.gt]: new Date() } }
+                    ]
+                },
+                include: [{
+                    model: User,
+                    as: 'user_detail',
+                    required: true 
+                }]
+            });
 
-    // async findUsersByTags(tagList){
-    //     return user_tags.findAll({
-    //         include: [{
-    //             // model: user_tags,
-    //             where: {
-    //                 tag: { [Op.in]: tagList },
-    //                 [Op.or]: [
-    //                     { expiresAt: null },
-    //                     { expiresAt: { [Op.gt]: new Date() } }
-    //                 ]
-    //             },
-    //             required: true
-    //         }]
-    //     });
+            return result;
+        } catch (error) {
+            console.error("Error fetching users by tags:", error);
+            throw new Error("Error fetching users");
+        }
+    }
 }
 
 module.exports = UserTagRepository;

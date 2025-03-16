@@ -31,6 +31,7 @@ async function createUserTag(req, res){
 
 async function getUserTag(req, res){
     try {
+        console.log(req.query.tags);
         const response = await UserTagService.getUserTag(req.query.tags);
 
         return res
