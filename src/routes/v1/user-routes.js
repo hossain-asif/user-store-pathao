@@ -30,7 +30,7 @@ router.post('/:id/tags',
 
 // /api/v1/users/ GET
 router.get('/',
-    UserTagController.getUser);
+    UserTagController.getUserTag);
 
 
 

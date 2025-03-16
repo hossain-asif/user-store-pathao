@@ -4,7 +4,7 @@ const {UserTagService} = require('../services');
 const {SuccessResponse, ErrorResponse} = require('../utils/response');
 
 
-async function createUser(req, res){
+async function createUserTag(req, res){
     try {
         console.log(req.params.id);
         const response = await UserTagService.createUserTag(req.params.id, req.body.tags, req.body.expiry);
@@ -29,7 +29,7 @@ async function createUser(req, res){
 
 
 
-async function getUser(req, res){
+async function getUserTag(req, res){
     try {
         const response = await UserTagService.getUserTag(req.query.tags);
 
@@ -52,6 +52,6 @@ async function getUser(req, res){
 
 
 module.exports = {
-    createUser,
-    getUser
+    createUserTag,
+    getUserTag
 }

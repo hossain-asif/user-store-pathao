@@ -43,6 +43,7 @@ async function createUserTag(user_id, tags, expiry){
 async function getUserTag(tags){
     try{
         const tagList = tags.split(',');
+        console.log(tagList);
         const users = await userTagRepository.findUsersByTags(tagList);
 
         return users;
