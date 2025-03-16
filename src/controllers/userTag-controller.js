@@ -30,14 +30,7 @@ async function createUser(req, res){
 
 async function getUser(req, res){
     try {
-        let response = await UserService.getUser(req.params.id);
-
-        SuccessResponse.message = "successfully fetched.";
-        SuccessResponse.data = {
-            id: response.id,
-            name: response.firstName+" "+response.lastName,
-            phone: response.phone
-        };
+        const response = await UserTagService.getUserTag(req.query.tags);
 
         return res
                 .status(StatusCodes.OK)

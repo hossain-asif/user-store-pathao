@@ -12,6 +12,21 @@ class UserTagRepository extends CrudRepository{
         let response = await this.model.bulkCreate(data);
         return response;
     }
+
+    // async findUsersByTags(tagList){
+    //     return user_tags.findAll({
+    //         include: [{
+    //             // model: user_tags,
+    //             where: {
+    //                 tag: { [Op.in]: tagList },
+    //                 [Op.or]: [
+    //                     { expiresAt: null },
+    //                     { expiresAt: { [Op.gt]: new Date() } }
+    //                 ]
+    //             },
+    //             required: true
+    //         }]
+    //     });
 }
 
 module.exports = UserTagRepository;

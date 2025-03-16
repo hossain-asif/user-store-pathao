@@ -1,10 +1,10 @@
 const { StatusCodes } = require('http-status-codes');
 const { AppError } = require('../utils/errors');
-const { UserTagRepository } = require('../repositories');
+const { UserTagRepository , UserRepository} = require('../repositories');
 const { ErrorResponse } = require('../utils/response');
 
 let userTagRepository = new UserTagRepository();
-
+let userRepository = new UserRepository();
 
 
 async function createUserTag(user_id, tags, expiry){
@@ -34,10 +34,12 @@ async function createUserTag(user_id, tags, expiry){
 
 
 
-async function getUserTag(id){
+async function getUserTag(tags){
     try{
-        let User = await userTagRepository.get(id);
-        return User;
+        const tagList = tags.split(',');
+        const users = await userTagRepository.findUsersByTags(tagList);
+
+        return users;
     }catch(error){
         if(error.StatusCodes == StatusCodes.NOT_FOUND){
             throw new AppError("Not able to find the resource.", StatusCodes.NOT_FOUND);
